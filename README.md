@@ -24,7 +24,7 @@ MORPH-1 uses a three-part visual system derived from the project itself:
 - **Clinical Regrowth** — the primary hero: a damaged organism with an active regeneration front.
 - **Computed Lab Plate** — the research-style project figure: intact, incision and recovery in one view.
 
-![MORPH-1 computed lab plate](assets/figures/lab-plate.svg)
+![MORPH-1 computed lab plate](assets/figures/lab-plate.webp)
 
 ## Open the laboratory
 
