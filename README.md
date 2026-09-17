@@ -12,7 +12,7 @@ MORPH-1 begins with 128 cells inside a bounded two-dimensional body. Each cell r
 
 > **Status:** experimental software model, version 0.1.0. MORPH-1 is not a biological tissue simulation, medical model, developmental-biology claim, or reconstruction of a real organism. Its rules and parameters are engineered for inspectability.
 
-![MORPH-1 clinical regrowth hero](assets/figures/hero-clinical-regrowth.svg)
+![MORPH-1 clinical regrowth hero](assets/figures/hero-clinical-regrowth.jpg)
 
 [Quick start](docs/QUICKSTART.md) · [Methods](docs/METHODS.md) · [Experiments](docs/EXPERIMENTS.md) · [Results](docs/RESULTS.md) · [Architecture](docs/ARCHITECTURE.md) · [Limitations](docs/LIMITATIONS.md)
 
