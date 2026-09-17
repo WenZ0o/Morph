@@ -1,0 +1,16 @@
+(function(root){
+  class MorphRenderer{
+    constructor(canvas){this.canvas=canvas;this.ctx=canvas.getContext("2d");this.dpr=1;this.resize();}
+    resize(){const r=this.canvas.parentElement.getBoundingClientRect();this.dpr=Math.min(devicePixelRatio||1,2);this.canvas.width=Math.max(1,Math.round(r.width*this.dpr));this.canvas.height=Math.max(1,Math.round(r.height*this.dpr));this.ctx.setTransform(this.dpr,0,0,this.dpr,0,0);this.w=r.width;this.h=r.height;}
+    map(sim,x,y){return {x:x/sim.width*this.w,y:y/sim.height*this.h};}
+    grid(){const g=this.ctx;g.clearRect(0,0,this.w,this.h);g.save();g.strokeStyle="rgba(225,235,226,.035)";g.lineWidth=1;for(let x=0;x<this.w;x+=32){g.beginPath();g.moveTo(x,0);g.lineTo(x,this.h);g.stroke()}for(let y=0;y<this.h;y+=32){g.beginPath();g.moveTo(0,y);g.lineTo(this.w,y);g.stroke()}g.restore();}
+    field(sim){const g=this.ctx,step=26;for(let y=0;y<this.h;y+=step)for(let x=0;x<this.w;x+=step){const sx=x/this.w*sim.width,sy=y/this.h*sim.height,s=MorphCore.signalAt(sx,sy,sim.width,sim.height,sim.flags,null);const r=Math.round(40+130*s.B),b=Math.round(55+120*s.A),gr=Math.round(50+80*s.C);g.fillStyle=`rgba(${r},${gr},${b},.20)`;g.fillRect(x,y,step+1,step+1)}}
+    body(sim,mode="observatory"){const g=this.ctx,cells=sim.living();if(mode==="signals")this.field(sim);if(mode==="atlas"){g.lineWidth=.7;for(let i=0;i<cells.length;i++)for(let j=i+1;j<cells.length;j++){const a=cells[i],b=cells[j],d=(a.x-b.x)**2+(a.y-b.y)**2;if(d<33*33){const A=this.map(sim,a.x,a.y),B=this.map(sim,b.x,b.y);g.strokeStyle="rgba(159,181,170,.10)";g.beginPath();g.moveTo(A.x,A.y);g.lineTo(B.x,B.y);g.stroke()}}}
+      g.save();g.globalCompositeOperation="lighter";for(const c of cells){const p=this.map(sim,c.x,c.y);const rad=mode==="atlas"?3.2:5.2;let fill;if(mode==="signals")fill=`rgba(${Math.round(180+70*c.signalB)},${Math.round(150+60*c.centerSignal)},${Math.round(175+70*c.signalA)},.85)`;else if(c.stress>.55)fill=`rgba(226,139,120,${.55+c.stress*.35})`;else fill=`rgba(233,214,166,${.58+c.energy*.25})`;g.shadowBlur=mode==="atlas"?6:12;g.shadowColor=fill;g.fillStyle=fill;g.beginPath();g.arc(p.x,p.y,rad,0,Math.PI*2);g.fill();if(sim.selected===c.id){g.shadowBlur=0;g.strokeStyle="#ffffff";g.lineWidth=1;g.beginPath();g.arc(p.x,p.y,rad+5,0,Math.PI*2);g.stroke()}}g.restore();}
+    labels(sim,mode){const g=this.ctx;g.save();g.fillStyle="rgba(236,233,220,.65)";g.font="10px ui-monospace, monospace";g.fillText(`SEED ${sim.seed}`,14,20);g.fillText(`CYCLE ${String(sim.cycle).padStart(5,"0")}`,14,36);g.fillText(`${sim.living().length} CELLS`,14,52);if(mode==="signals"){g.fillStyle="rgba(147,215,208,.75)";g.fillText("A ← POSITIONAL FIELD → B",14,this.h-20)}g.restore();}
+    render(sim,mode){this.grid();this.body(sim,mode);this.labels(sim,mode);}
+    nearest(sim,clientX,clientY){const r=this.canvas.getBoundingClientRect(),x=(clientX-r.left)/r.width*sim.width,y=(clientY-r.top)/r.height*sim.height;let best=null,bd=Infinity;for(const c of sim.living()){const d=(c.x-x)**2+(c.y-y)**2;if(d<bd){bd=d;best=c}}return bd<28*28?best:null;}
+    simPoint(sim,clientX,clientY){const r=this.canvas.getBoundingClientRect();return {x:(clientX-r.left)/r.width*sim.width,y:(clientY-r.top)/r.height*sim.height};}
+  }
+  root.MorphUI=root.MorphUI||{};root.MorphUI.MorphRenderer=MorphRenderer;
+})(globalThis);
