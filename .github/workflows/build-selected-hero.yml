@@ -1,0 +1,44 @@
+name: Build selected hero
+
+on:
+  push:
+    paths:
+      - '.github/hero-webp/**'
+      - '.github/workflows/build-selected-hero.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-selected-hero:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Rebuild selected MORPH-1 hero
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .github/hero-webp/*.part | tr -d '\n\r' | base64 --decode > assets/figures/morph-1-hero-selected.webp
+          file assets/figures/morph-1-hero-selected.webp
+          bytes=$(stat -c%s assets/figures/morph-1-hero-selected.webp)
+          echo "hero bytes: $bytes"
+          test "$bytes" -gt 15000
+          sed -i 's#morph-1-hero-selected\.jpg#morph-1-hero-selected.webp#g' README.md
+          grep -q 'assets/figures/morph-1-hero-selected.webp' README.md
+
+      - name: Commit generated hero
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/figures/morph-1-hero-selected.webp README.md
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+            exit 0
+          fi
+          git commit -m "Build selected MORPH-1 hero artwork"
+          git push
