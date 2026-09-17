@@ -1,4 +1,6 @@
-<p align="center"><img src="assets/brand/morph-mark.svg" width="72" alt="MORPH-1 mark"></p>
+<p align="center">
+  <img src="assets/brand/living-colony.svg" width="120" alt="MORPH-1 living colony icon">
+</p>
 
 # MORPH-1
 
@@ -10,9 +12,19 @@ MORPH-1 begins with 128 cells inside a bounded two-dimensional body. Each cell r
 
 > **Status:** experimental software model, version 0.1.0. MORPH-1 is not a biological tissue simulation, medical model, developmental-biology claim, or reconstruction of a real organism. Its rules and parameters are engineered for inspectability.
 
-![MORPH-1 observatory](assets/figures/observatory.svg)
+![MORPH-1 clinical regrowth hero](assets/figures/hero-clinical-regrowth.svg)
 
 [Quick start](docs/QUICKSTART.md) · [Methods](docs/METHODS.md) · [Experiments](docs/EXPERIMENTS.md) · [Results](docs/RESULTS.md) · [Architecture](docs/ARCHITECTURE.md) · [Limitations](docs/LIMITATIONS.md)
+
+## Visual identity
+
+MORPH-1 uses a three-part visual system derived from the project itself:
+
+- **Living Colony** — the compact repo mark: a connected software-cell cluster with a cyan signal core.
+- **Clinical Regrowth** — the primary hero: a damaged organism with an active regeneration front.
+- **Computed Lab Plate** — the research-style project figure: intact, incision and recovery in one view.
+
+![MORPH-1 computed lab plate](assets/figures/lab-plate.svg)
 
 ## Open the laboratory
 
@@ -55,6 +67,12 @@ The visual body is not an independent animation. Cell positions, contacts, birth
 | **Experiments** | Execute matched protocols from a deterministic seed. |
 | **Run archive** | Save and export seed, cycle and intervention history. |
 
+### Runtime views
+
+![MORPH-1 observatory](assets/figures/observatory.svg)
+
+![MORPH-1 signal field](assets/figures/signal-field.svg)
+
 ## Fixed experiment set
 
 | Protocol | Intervention | Question |
@@ -77,8 +95,6 @@ npm run benchmark
 ```
 
 It writes `data/benchmarks/reference.json`. `docs/RESULTS.md` explains how to interpret the metrics and why they should not be generalized to living tissue.
-
-![MORPH-1 signal field](assets/figures/signal-field.svg)
 
 ## Build and verify
 
@@ -103,7 +119,9 @@ morph-1/
 │   ├── experiments/      # fixed protocol definitions
 │   └── ui/               # renderer and controls
 ├── data/benchmarks/      # executed reference series
-├── assets/               # mark and computed model figures
+├── assets/
+│   ├── brand/            # living colony mark
+│   └── figures/          # computed figures and visual identity assets
 ├── scripts/              # server, benchmark, build and verification
 ├── tests/                # deterministic checks
 ├── docs/                 # methods, interpretation and developer notes
