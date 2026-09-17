@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+title: MORPH-1
+message: "If you use this software experiment, cite the repository and version."
+type: software
+authors:
+  - name: WenZ0o
+version: 0.1.0
+date-released: 2026-09-17
+license: MIT
