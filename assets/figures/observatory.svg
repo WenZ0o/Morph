@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
+<defs>
+  <pattern id="g" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M60 0H0V60" fill="none" stroke="#181b1b"/></pattern>
+  <radialGradient id="halo"><stop stop-color="#24302b" stop-opacity=".75"/><stop offset="1" stop-color="#0a0b0b" stop-opacity="0"/></radialGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="1440" height="900" fill="#0a0b0b"/><rect width="1440" height="900" fill="url(#g)"/>
+<text x="58" y="70" fill="#e8e1cf" font-family="monospace" font-size="34" font-weight="700">MORPH-1 / OBSERVATORY</text>
+<text x="60" y="108" fill="#8d938c" font-family="monospace" font-size="18">SEED 0042 · CYCLE 01837 · 128 CELLS · RUNNING</text>
+<g font-family="monospace"><text x="60" y="210" fill="#8d938c" font-size="15">SHAPE RECOVERY</text><text x="60" y="248" fill="#e8e1cf" font-size="30">0.91</text><path d="M60 266h220" stroke="#202422" stroke-width="5"/><path d="M60 266h200" stroke="#d9b47a" stroke-width="5"/>
+<text x="60" y="330" fill="#8d938c" font-size="15">MEAN ENERGY</text><text x="60" y="368" fill="#e8e1cf" font-size="30">0.74</text><path d="M60 386h220" stroke="#202422" stroke-width="5"/><path d="M60 386h163" stroke="#d9b47a" stroke-width="5"/>
+<text x="60" y="450" fill="#8d938c" font-size="15">SIGNAL COHERENCE</text><text x="60" y="488" fill="#e8e1cf" font-size="30">0.83</text><path d="M60 506h220" stroke="#202422" stroke-width="5"/><path d="M60 506h183" stroke="#d9b47a" stroke-width="5"/></g>
+<ellipse cx="740" cy="455" rx="370" ry="280" fill="url(#halo)"/>
+<g fill="none" stroke="#27312c"><ellipse cx="740" cy="455" rx="330" ry="235"/><ellipse cx="740" cy="455" rx="260" ry="185"/></g>
+<g filter="url(#glow)" fill="#e8e1cf" opacity=".9">
+<circle cx="520" cy="390" r="10"/><circle cx="555" cy="350" r="8"/><circle cx="590" cy="330" r="9"/><circle cx="630" cy="312" r="7"/><circle cx="675" cy="300" r="11"/><circle cx="720" cy="292" r="8"/><circle cx="765" cy="300" r="9"/><circle cx="810" cy="315" r="10"/><circle cx="850" cy="342" r="8"/><circle cx="885" cy="380" r="10"/><circle cx="905" cy="425" r="8"/><circle cx="915" cy="470" r="9"/><circle cx="900" cy="515" r="10"/><circle cx="870" cy="555" r="8"/><circle cx="830" cy="585" r="9"/><circle cx="785" cy="605" r="8"/><circle cx="735" cy="612" r="11"/><circle cx="690" cy="602" r="8"/><circle cx="645" cy="585" r="10"/><circle cx="605" cy="555" r="8"/><circle cx="565" cy="515" r="10"/><circle cx="535" cy="470" r="8"/><circle cx="525" cy="430" r="9"/>
+<circle cx="620" cy="410" r="8"/><circle cx="660" cy="390" r="10"/><circle cx="705" cy="382" r="8"/><circle cx="750" cy="388" r="9"/><circle cx="795" cy="404" r="8"/><circle cx="825" cy="440" r="10"/><circle cx="810" cy="480" r="8"/><circle cx="780" cy="512" r="10"/><circle cx="735" cy="525" r="8"/><circle cx="690" cy="515" r="9"/><circle cx="650" cy="488" r="8"/><circle cx="625" cy="450" r="10"/>
+</g>
+<g fill="#d9b47a" filter="url(#glow)"><circle cx="590" cy="455" r="10"/><circle cx="705" cy="440" r="10"/><circle cx="845" cy="495" r="9"/></g>
+<g fill="#b66a60" filter="url(#glow)"><circle cx="765" cy="345" r="9"/><circle cx="670" cy="550" r="9"/></g>
+<path d="M590 455Q740 330 845 495M670 550Q740 455 765 345" fill="none" stroke="#8fb5ae" stroke-opacity=".45" stroke-width="2"/>
+<rect x="1110" y="160" width="270" height="520" rx="8" fill="#0d0f0f" stroke="#2a2d2c"/><g font-family="monospace"><text x="1140" y="210" fill="#e8e1cf" font-size="20">CELL 084</text><text x="1140" y="270" fill="#8d938c">ENERGY</text><text x="1320" y="270" text-anchor="end" fill="#e8e1cf">0.82</text><text x="1140" y="330" fill="#8d938c">AGE</text><text x="1320" y="330" text-anchor="end" fill="#e8e1cf">311</text><text x="1140" y="390" fill="#8d938c">NEIGHBORS</text><text x="1320" y="390" text-anchor="end" fill="#e8e1cf">6</text><text x="1140" y="450" fill="#8d938c">SIGNAL A</text><text x="1320" y="450" text-anchor="end" fill="#e8e1cf">0.67</text><text x="1140" y="510" fill="#8d938c">SIGNAL B</text><text x="1320" y="510" text-anchor="end" fill="#e8e1cf">0.21</text><text x="1140" y="570" fill="#8d938c">STRESS</text><text x="1320" y="570" text-anchor="end" fill="#e8e1cf">0.09</text></g>
+<text x="60" y="842" fill="#8d938c" font-family="monospace" font-size="15">LOCAL RULES · GLOBAL FORM · REPRODUCIBLE INTERVENTIONS</text>
+</svg>
