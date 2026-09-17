@@ -1,0 +1,27 @@
+(function(root){
+  const C=root.MorphCore;
+  class MorphSimulation{
+    constructor({seed=42,width=900,height=620,count=128}={}){this.width=width;this.height=height;this.count=count;this.reset(seed);}
+    makeTargets(){const out=[];const cols=16,rows=8;for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){const u=(c+.5)/cols*2-1,v=(r+.5)/rows*2-1;const shape=(u*u)+Math.pow(v*1.22,2);let x=this.width/2+u*this.width*.315,y=this.height/2+v*this.height*.285;if(shape<1.18){x+=Math.sin(v*3.1)*10*(1-Math.abs(u));y+=Math.sin(u*4.2)*5;}out.push({slot:out.length,x,y});}return out.slice(0,this.count);}
+    reset(seed=this.seed||42){this.seed=String(seed);this.rng=new C.SeededRandom(this.seed);this.cycle=0;this.nextId=0;this.flags={signalA:true,signalB:true,starvation:false,polarityFlip:false,randomPolicy:false,noise:0};this.events=[];this.targets=this.makeTargets();this.cells=this.targets.map(t=>C.createCell(this.nextId++,t,null,this.rng));this.selected=null;this.baselineMetrics=null;for(let i=0;i<15;i++)this.step(false);this.cycle=0;this.events=[];this.baselineMetrics=C.computeMetrics(this);return this;}
+    record(type,data){this.events.push({cycle:this.cycle,type,...data});}
+    living(){return this.cells.filter(c=>c.alive);}
+    removeWhere(fn,type="ablation"){let n=0;for(const c of this.cells){if(c.alive&&fn(c)){c.alive=false;n++;}}this.record(type,{removed:n});return n;}
+    ablateCircle(x,y,r=40){return this.removeWhere(c=>(c.x-x)**2+(c.y-y)**2<r*r,"manual-ablation");}
+    nearestMissingTarget(){const live=this.living(),used=new Set();for(const c of live){let bi=-1,bd=Infinity;for(let i=0;i<this.targets.length;i++){if(used.has(i))continue;const t=this.targets[i],d=(c.targetX-t.x)**2+(c.targetY-t.y)**2;if(d<bd){bd=d;bi=i;}}if(bi>=0&&bd<4)used.add(bi);}const missing=[];for(let i=0;i<this.targets.length;i++)if(!used.has(i))missing.push(this.targets[i]);return missing;}
+    maybeDivide(){const live=this.living();if(live.length>=this.count||this.cycle%11!==0)return;const missing=this.nearestMissingTarget();if(!missing.length)return;const t=this.rng.pick(missing);let parent=null,bd=Infinity;for(const c of live){if(c.energy<.53)continue;const d=(c.x-t.x)**2+(c.y-t.y)**2;if(d<bd){bd=d;parent=c;}}if(!parent)return;const child=C.createCell(this.nextId++,t,parent.id,this.rng);child.x=parent.x+this.rng.normal()*7;child.y=parent.y+this.rng.normal()*7;child.energy=.54;child.born=this.cycle;parent.energy*=.73;this.cells.push(child);this.record("division",{parent:parent.id,child:child.id});}
+    step(track=true){this.cycle++;const cells=this.living(),n=cells.length;for(let i=0;i<n;i++){const a=cells[i];let fx=0,fy=0,neighbors=0;for(let j=0;j<n;j++){if(i===j)continue;const b=cells[j],dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy;if(d2>42*42||d2<.01)continue;const d=Math.sqrt(d2);neighbors++;if(d<16){const f=(16-d)*.017;fx+=dx/d*f;fy+=dy/d*f}else if(d<29){const f=(d-21)*-.003;fx+=dx/d*f;fy+=dy/d*f;}}
+      const sig=C.signalAt(a.x,a.y,this.width,this.height,this.flags,this.rng);a.signalA=sig.A;a.signalB=sig.B;a.centerSignal=sig.C;a.nutrient=sig.nutrient;a.neighbors=neighbors;
+      const dx=a.targetX-a.x,dy=a.targetY-a.y,dist=Math.hypot(dx,dy);let home=.0064;if(this.flags.randomPolicy){home=.0012;fx+=this.rng.normal()*.17;fy+=this.rng.normal()*.17}else{const inferredX=(sig.B-sig.A)*this.width*.315+this.width/2;fx+=(inferredX-a.x)*.00075;fy+=dy*home;fx+=dx*home;}
+      a.stress=Math.min(1,dist/70+Math.max(0,2-neighbors)*.08);const gain=.0058*sig.nutrient,maintenance=.0031+.0028*a.stress;a.energy=Math.max(.08,Math.min(1.35,a.energy+gain-maintenance));if(a.energy<.22)a.stress=Math.min(1,a.stress+.1);
+      const damping=.84;a.vx=(a.vx+fx)*damping;a.vy=(a.vy+fy)*damping;const speed=Math.hypot(a.vx,a.vy),max=.9;if(speed>max){a.vx=a.vx/speed*max;a.vy=a.vy/speed*max;}a.age++;}
+      for(const a of cells){a.x=Math.max(24,Math.min(this.width-24,a.x+a.vx));a.y=Math.max(24,Math.min(this.height-24,a.y+a.vy));}
+      this.maybeDivide();if(track&&this.cycle%30===0)this.lastMetrics=C.computeMetrics(this);return this;
+    }
+    run(steps){for(let i=0;i<steps;i++)this.step();return this;}
+    snapshot(){return {version:"0.1.0",seed:this.seed,cycle:this.cycle,flags:{...this.flags},events:this.events.filter(e=>e.type!=="division"),cells:this.living().map(c=>({id:c.id,parent:c.parent,x:+c.x.toFixed(3),y:+c.y.toFixed(3),targetX:c.targetX,targetY:c.targetY,energy:+c.energy.toFixed(4),stress:+c.stress.toFixed(4),age:c.age,born:c.born}))};}
+    exportRun(){return JSON.stringify({seed:this.seed,cycle:this.cycle,events:this.events.filter(e=>e.type!=="division")},null,2);}
+    static replay(record){const sim=new MorphSimulation({seed:record.seed});const events=[...(record.events||[])].filter(e=>e.type!=="division").sort((a,b)=>a.cycle-b.cycle);let p=0;while(sim.cycle<record.cycle){while(p<events.length&&events[p].cycle===sim.cycle){const e=events[p++];if(e.type==="manual-ablation"){} else if(e.type==="incision")C.interventions.incision(sim);else if(e.type==="signal-loss")C.interventions.signalLoss(sim);else if(e.type==="starvation")C.interventions.starvation(sim);else if(e.type==="polarity-flip")C.interventions.polarityFlip(sim);else if(e.type==="random-policy")C.interventions.randomPolicy(sim);else if(e.type==="signal-noise")C.interventions.signalNoise(sim);else if(e.type==="split")C.interventions.split(sim);}sim.step();}return sim;}
+  }
+  root.MorphCore=root.MorphCore||{};root.MorphCore.MorphSimulation=MorphSimulation;if(typeof module!=="undefined")module.exports=MorphSimulation;
+})(globalThis);
