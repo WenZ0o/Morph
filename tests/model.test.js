@@ -1,0 +1,5 @@
+const test=require('node:test'),assert=require('node:assert/strict');require('../src/core/random.js');require('../src/core/environment.js');require('../src/core/cell.js');require('../src/core/metrics.js');require('../src/core/interventions.js');require('../src/core/simulation.js');
+test('same seed is deterministic',()=>{const a=new MorphCore.MorphSimulation({seed:42}).run(200).snapshot();const b=new MorphCore.MorphSimulation({seed:42}).run(200).snapshot();assert.deepEqual(a,b)});
+test('baseline remains populated',()=>{const s=new MorphCore.MorphSimulation({seed:23}).run(900),m=MorphCore.computeMetrics(s);assert.ok(m.cells>=124);assert.ok(m.recovery>.9)});
+test('incision removes tissue and model can regrow',()=>{const s=new MorphCore.MorphSimulation({seed:42});s.run(250);const before=s.living().length;MorphCore.interventions.incision(s);const cut=s.living().length;assert.ok(cut<before);s.run(650);assert.ok(s.living().length>cut)});
+test('random policy is a real control flag',()=>{const s=new MorphCore.MorphSimulation({seed:61});MorphCore.interventions.randomPolicy(s);assert.equal(s.flags.randomPolicy,true)});
