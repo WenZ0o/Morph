@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs>
+  <radialGradient id="gCyan" cx="50%" cy="45%" r="60%">
+    <stop offset="0%" stop-color="#b7fbff"/>
+    <stop offset="45%" stop-color="#7fe9f2"/>
+    <stop offset="100%" stop-color="#153944"/>
+  </radialGradient>
+  <radialGradient id="gIvory" cx="45%" cy="40%" r="70%">
+    <stop offset="0%" stop-color="#fffaf0"/>
+    <stop offset="70%" stop-color="#efe7d2"/>
+    <stop offset="100%" stop-color="#b0a186"/>
+  </radialGradient>
+  <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="10" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+<rect width="1024" height="1024" rx="180" fill="#06090d"/>
+<g filter="url(#softGlow)">
+  <path d="M365 340 C410 355 435 388 462 454 C474 486 507 494 530 470 C552 447 575 423 625 408 C676 392 724 405 760 448 C702 415 652 425 618 468 C595 498 584 532 548 545 C517 557 481 548 460 523 C437 496 427 449 385 423 C348 400 319 401 290 412 C308 380 331 354 365 340 Z" fill="#12313a" opacity="0.9"/>
+  <g stroke="#dff9ff" stroke-opacity="0.18" stroke-width="10" fill="none">
+    <path d="M392 372 C445 408 482 442 512 512"/>
+    <path d="M644 394 C602 432 556 470 512 512"/>
+    <path d="M392 642 C438 611 479 566 512 512"/>
+    <path d="M694 586 C644 576 586 548 512 512"/>
+  </g>
+  <g>
+    <circle cx="512" cy="512" r="122" fill="url(#gCyan)" stroke="#d5ffff" stroke-opacity="0.45" stroke-width="6"/>
+    <circle cx="512" cy="512" r="14" fill="#08363f"/>
+    <circle cx="358" cy="378" r="118" fill="url(#gIvory)" stroke="#fff6e1" stroke-opacity="0.4" stroke-width="6"/>
+    <circle cx="656" cy="418" r="95" fill="url(#gIvory)" stroke="#fff6e1" stroke-opacity="0.4" stroke-width="6"/>
+    <circle cx="372" cy="662" r="115" fill="url(#gIvory)" stroke="#fff6e1" stroke-opacity="0.4" stroke-width="6"/>
+    <circle cx="556" cy="732" r="98" fill="url(#gIvory)" stroke="#fff6e1" stroke-opacity="0.4" stroke-width="6"/>
+    <circle cx="748" cy="636" r="82" fill="url(#gIvory)" stroke="#fff6e1" stroke-opacity="0.4" stroke-width="6"/>
+    <g fill="#0f1012" opacity="0.65">
+      <circle cx="358" cy="378" r="16"/>
+      <circle cx="656" cy="418" r="14"/>
+      <circle cx="372" cy="662" r="16"/>
+      <circle cx="556" cy="732" r="15"/>
+      <circle cx="748" cy="636" r="12"/>
+    </g>
+  </g>
+</g>
+</svg>
