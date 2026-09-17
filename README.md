@@ -16,7 +16,7 @@ MORPH-1 begins with 128 cells inside a bounded two-dimensional body. Each cell r
 
 ## Open the laboratory
 
-The simplest build is **`MORPH-1.html`**. Double-click it in a modern desktop browser. It is self-contained and needs no package installation, account, API key or network request.
+Download or clone the repository, then double-click **`MORPH-1.html`**. The committed offline entry uses the repository's local CSS and JavaScript files, so it needs no package installation, account, API key or network request. Run `npm run build` to assemble those same sources into a single-file standalone `MORPH-1.html`.
 
 For source development with Node.js 20 or later:
 
@@ -89,13 +89,13 @@ npm run build
 npm run verify
 ```
 
-`npm run build` assembles the portable `MORPH-1.html` from the source application. The runtime itself has no third-party dependencies.
+`npm run build` assembles a single-file standalone `MORPH-1.html` from the source application. The runtime itself has no third-party dependencies.
 
 ## Repository map
 
 ```text
 morph-1/
-├── MORPH-1.html          # portable offline laboratory
+├── MORPH-1.html          # offline laboratory entry; build can bundle it
 ├── index.html            # source application entry
 ├── styles.css
 ├── src/
@@ -103,7 +103,7 @@ morph-1/
 │   ├── experiments/      # fixed protocol definitions
 │   └── ui/               # renderer and controls
 ├── data/benchmarks/      # executed reference series
-├── assets/               # mark and computed screenshots
+├── assets/               # mark and computed model figures
 ├── scripts/              # server, benchmark, build and verification
 ├── tests/                # deterministic checks
 ├── docs/                 # methods, interpretation and developer notes
